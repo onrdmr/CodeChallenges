@@ -1,7 +1,7 @@
 # CodeTON round 5 (Div.1 + Div.2, Rated, Prizes!)
 
 A. Tenzing and Tsondu (Done)
-B. Tenzing and Book 
+B. Tenzing and Book (Done)
 C. Tenzing and Balls
 D. Tenzing and his animal Friends
 E. Tenzing and Triangle
