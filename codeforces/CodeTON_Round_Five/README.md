@@ -2,7 +2,7 @@
 
 A. Tenzing and Tsondu (Done)
 B. Tenzing and Book (Done)
-C. Tenzing and Balls
+C. Tenzing and Balls (Done)
 D. Tenzing and his animal Friends
 E. Tenzing and Triangle
 F. Tenzing and Tree
