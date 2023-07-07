@@ -1,17 +1,18 @@
 #include <iostream>
 #include <map>
-
+#include <string>
+#include <deque>
+ 
 typedef long long int lli;
-
+ 
 int main() {
-
+ 
     lli ts, p=0, pw_size;
     std::cin >> ts;
     std::string s, pw1, pw2;
     bool found = false;
-
-    std::map<lli, std::pair<lli, lli>>  is;
-
+ 
+ 
     for ( lli i = 0 ; i < ts ; i++ )
     {
         std::cin >> s;
@@ -19,23 +20,87 @@ int main() {
         std::cin >> pw1;
         std::cin >> pw2;
         p = 0;
-
-        found = false;
-
+ 
+        std::map<int, std::deque<lli>> map;
+ 
+        found = true;
+ 
         for ( lli j = 0 ; j < s.size() ; j++ )
         {
-            if(is.find(j) == is.cend()) {
-                is[s.at(j)].first = j;
-                is[s.at(j)].second = j;
-                continue;
-            }
-            is[s.at(j)].second = j;
+            map[s[j] - '0'].push_back(j);
         }
-        for ( lli j = 0 ; j < s.size() ; j++ )
+ 
+        int max = 0;
+        for( lli j = 0 ; j < pw_size ; j++ )
         {
             
-        }
+            lli lw = pw1.at(j) - '0';
+            lli hg = pw2.at(j) - '0';
+ 
+            int n_max = 0;
+            for ( lli k = lw ; k <= hg ; k++ )
+            {   
+                if( map.find(k) == map.end() )
+                {
+                    found = false;
+                    goto check;
+                }
+                bool stop = true;
+                bool bs_found = false;
+                int rm_idx = map[k].size() - 1;
+                int lm_idx = 0;
+                int m_idx ;
 
+                while( stop ) {
+                    m_idx = lm_idx + (rm_idx - lm_idx ) / 2 ;
+
+                    if ( map[k].size() == 0 ) 
+                    {
+                        stop = false;
+                        continue;
+                    } 
+                    else if ( m_idx >= 1 && map[k][m_idx] >= max && map[k][m_idx-1] <= max ) {
+                        stop = false;
+                        bs_found = true;
+                    }
+                    else if ( map[k][m_idx] >= max ) {
+                        // m_idx = lm_idx + (rm_idx - lm_idx)  / 2;
+                        rm_idx = m_idx;
+                        if ( m_idx == 0 )
+                        {
+                            bs_found = true;
+                        }
+                    } else {
+                        lm_idx = m_idx+1; 
+                    }
+                    if( m_idx == 0 || m_idx == map[k].size() -1 )
+                    {
+                        stop = false;
+                    }
+                }
+                if ( bs_found ) {
+                    if(map[k][m_idx] > n_max)
+                    {
+                        n_max = map[k][m_idx];
+
+                    }
+                } else {
+                    found = false;
+                    goto check;
+                }
+                map[k].pop_front();
+            }
+            
+            if ( n_max >= max ) {
+                max = n_max;
+            }
+            else {
+                found = false;
+                goto check;
+            }
+        }
+        
+        check:
         if ( found == true )
         {
             std::cout << "NO" << std::endl;
@@ -43,17 +108,10 @@ int main() {
         else {
             std::cout << "YES" << std::endl;
         }
+ 
+        found = true;
     }
-
-
+ 
+ 
     return 0;
 }
-
-/*
-1
-111100001010111001000
-7
-0000000
-0111111
-
-*/
